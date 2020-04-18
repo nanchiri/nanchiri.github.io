@@ -67,7 +67,7 @@
     <article id="post-博客测试" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/" class="article-date">
-  <time datetime="2020-04-18T05:52:11.000Z" itemprop="datePublished">2020-04-18</time>
+  <time datetime="2020-04-18T08:12:11.000Z" itemprop="datePublished">2020-04-18</time>
 </a>
     
   </div>
@@ -78,7 +78,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/">博客测试</a>
+      <a class="article-title" href="/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/">leetcode</a>
     </h1>
   
 
@@ -86,66 +86,47 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#题目</p>
+        <p>#题目<br>给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。每个细胞都具有一个初始状态：1 即为活细胞（live），或 0 即为死细胞（dead）。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律：</p>
+<p>如果活细胞周围八个位置的活细胞数少于两个，则该位置活细胞死亡；<br>如果活细胞周围八个位置有两个或三个活细胞，则该位置活细胞仍然存活；<br>如果活细胞周围八个位置有超过三个活细胞，则该位置活细胞死亡；<br>如果死细胞周围正好有三个活细胞，则该位置死细胞复活；<br>根据当前状态，写一个函数来计算面板上所有细胞的下一个（一次更新后的）状态。下一个状态是通过将上述规则同时应用于当前状态下的每个细胞所形成的，其中细胞的出生和死亡是同时发生的。</p>
+<p>input:[<br>  [0,1,0],<br>  [0,0,1],<br>  [1,1,1],<br>  [0,0,0]<br>]<br>output:<br>[<br>  [0,0,0],<br>  [1,0,1],<br>  [0,1,1],<br>  [0,1,0]<br>]</p>
 <hr>
-<p>#解题思路</p>
+<p>#解题思路<br> 使用原地算法，一般就会牵涉到编解码问题。（第一次遇到编码解码方法做题目，特此记录）题目意思是说：</p>
+<p>&lt; 2 live -&gt;dead</p>
+<p>2 or 3 live-&gt;live</p>
+<p>3 live-&gt;dead</p>
+<p>3 dead-&gt;live</p>
+<p>所以，统计八个方位的存活细胞数目（原地更新）：</p>
+<p>死细胞，周围存活细胞数=3，复活dead-&gt;live。</p>
+<p>活细胞，周围存活细胞数&lt;2 or &gt;3，死掉live-&gt;dead。</p>
+<p>但是原地更新，肯定不能用0和1更新board[ ][ ]，因为会破会下一次循环计算。</p>
+<p>可以使用3表示由死变活 3—活（解码时，3用1替换）</p>
+<p>可以使用2表示由活变死 2—死（解码时，2用0替换）</p>
+<p>所以，board[ ] [ ]中1和3都是live，0和2都是dead。那么，每次最末尾的时候都需要一次解码过程，也就是将3-&gt;1和2-&gt;0才符合题意。</p>
 <hr>
+<p>#参考代码<br>public void gameOfLife(int[][] board) {<br>//        若数组为null 则return<br>        if (board == null || board[0] == null) return;<br>        int rows = board.length, cols = board[0].length;<br>        for (int i = 0; i &lt; rows; i++) {<br>            for (int j = 0; j &lt; cols; j++) {<br>//                活细胞数<br>                int countlive = 0;<br>//                统计当前细胞周围八个位置的活细胞状态<br>                if (i - 1 &gt;= 0 &amp;&amp; (board[i - 1][j] == 2 || board[i - 1][j] == 1)) {<br>                    countlive += 1;<br>                }<br>                //右上<br>                if (i - 1 &gt;= 0 &amp;&amp; j + 1 &lt; cols &amp;&amp; (board[i - 1][j + 1] == 1 || board[i - 1][j + 1] == 2)) {<br>                    countlive += 1;<br>                }<br>                //右<br>                if (j + 1 &lt; cols &amp;&amp; (board[i][j + 1] == 1 || board[i][j + 1] == 2)) {<br>                    countlive += 1;<br>                }<br>                //右下<br>                if (i + 1 &lt; rows &amp;&amp; j + 1 &lt; cols &amp;&amp; (board[i + 1][j + 1] == 1 || board[i + 1][j + 1] == 2)) {<br>                    countlive += 1;<br>                }<br>                //下<br>                if (i + 1 &lt; rows &amp;&amp; (board[i + 1][j] == 1 || board[i + 1][j] == 2)) {<br>                    countlive += 1;<br>                }<br>                //左下<br>                if (i + 1 &lt; rows &amp;&amp; j - 1 &gt;= 0 &amp;&amp; (board[i + 1][j - 1] == 1 || board[i + 1][j - 1] == 2)) {<br>                    countlive += 1;<br>                }<br>                //左<br>                if (j - 1 &gt;= 0 &amp;&amp; (board[i][j - 1] == 1 || board[i][j - 1] == 2)) {<br>                    countlive += 1;<br>                }<br>                //左上<br>                if (j - 1 &gt;= 0 &amp;&amp; i - 1 &gt;= 0 &amp;&amp; (board[i - 1][j - 1] == 1 || board[i - 1][j - 1] == 2)) {<br>                    countlive += 1;<br>                }</p>
+<pre><code>            if (board[i][j] == 0 &amp;&amp; countlive == 3)
+                //更新--如果死细胞周围正好有三个活细胞，则该位置死细胞复活
+                //3表示由死变活   3---活
+                board[i][j] = 3;
+            if (board[i][j] == 1)
+                if (countlive &lt; 2 || countlive &gt; 3) board[i][j] = 2;
+
+
+        }
+    }
+    for (int i = 0; i &lt; rows; i++) {
+        for (int j = 0; j &lt; cols; j++) {
+            board[i][j] = board[i][j] % 2;
+        }
+    }
+}</code></pre><hr>
 <p> #参考文献</p>
 <hr>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/" data-id="ck95bywh80001lcvrbbo123x1" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/04/18/hello-world/" class="article-date">
-  <time datetime="2020-04-18T05:44:32.805Z" itemprop="datePublished">2020-04-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/18/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/hello-world/" data-id="ck95bywgx0000lcvrh5g22dbq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/" data-id="ck95cp1go0000n8vr2i6b2524" class="article-share-link">Share</a>
       
       
     </footer>
@@ -186,11 +167,7 @@
       <ul>
         
           <li>
-            <a href="/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/">博客测试</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/18/hello-world/">Hello World</a>
+            <a href="/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/">leetcode</a>
           </li>
         
       </ul>
