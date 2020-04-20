@@ -94,15 +94,12 @@
 <hr>
 <p>#解法<br>（bfs就不写咯）<br>线性扫描整个二维网络，如果一个节点为’1’，则以其为根据点启动dfs,搜索过程中访问过的节点赋值为’0’，计数dfs的根节点数量，即为岛屿的数量。</p>
 <hr>
-<p>#代码<br>public int numIslands(char[][] grid) {<br>        int ans=0;<br>        for (int i = 0; i &lt; grid.length; ++i) {<br>            for (int j = 0; j &lt; grid[i].length; j++) {<br>                if (grid[i][j]==’1’){<br>                    ans++;<br>                    dfs(grid,i,j);<br>                }<br>            }<br>        }<br>        return ans;<br>    }<br>    public static void dfs(char[][]grid,int row ,int col){<br>        if (row&lt;0||col&lt;0||row&gt;=grid.length||col&gt;=grid[0].length||grid[row][col]==’0’)<br>            return;<br>        dfs(grid,row+1,col);<br>        dfs(grid, row-1, col);<br>        dfs(grid, row, col+1);<br>        dfs(grid, row, col-1);</p>
-<pre><code>}
----
-#参考文献
-https://leetcode-cn.com/problems/number-of-islands/</code></pre>
+<p>#代码<br>public int numIslands(char[][] grid) {<br>        int ans=0;<br>        for (int i = 0; i &lt; grid.length; ++i) {<br>            for (int j = 0; j &lt; grid[i].length; j++) {<br>                if (grid[i][j]==’1’){<br>                    ans++;<br>                    dfs(grid,i,j);<br>                }<br>            }<br>        }<br>        return ans;<br>    }<br>    public static void dfs(char[][]grid,int row ,int col){<br>        if (row&lt;0||col&lt;0||row&gt;=grid.length||col&gt;=grid[0].length||grid[row][col]==’0’)<br>            return;<br>        dfs(grid,row+1,col);<br>        dfs(grid, row-1, col);<br>        dfs(grid, row, col+1);<br>        dfs(grid, row, col-1);<br>    }<br>    —<br>    #参考文献<br>    <a href="https://leetcode-cn.com/problems/number-of-islands/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/number-of-islands/</a></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/20/Leetcode3/" data-id="ck987aqpd00006svrgco68l2j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/20/Leetcode3/" data-id="ck988xcng0000ssvr0pld5n85" class="article-share-link">Share</a>
       
       
     </footer>
@@ -144,7 +141,7 @@ https://leetcode-cn.com/problems/number-of-islands/</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/Leetcode2/" data-id="ck987aqpi00016svre2mnet27" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/18/Leetcode2/" data-id="ck988xcnp0001ssvrf57ffsnm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -200,7 +197,7 @@ https://leetcode-cn.com/problems/number-of-islands/</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/" data-id="ck987aqpu00026svr4ooddhh3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/" data-id="ck988xcnq0002ssvr5dn1ds9g" class="article-share-link">Share</a>
       
       
     </footer>
