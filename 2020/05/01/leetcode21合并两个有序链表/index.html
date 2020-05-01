@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>五一摸鱼题leetcode21合并两个有序链表 | 伊藤三叶的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#题目 将两个升序链表合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。  示例： 输入：1-&gt;2-&gt;4, 1-&gt;3-&gt;4输出：1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4  #解题思路（一）暴力迭代遍历两个链表，然后合并即可。(二)递归在l1或l2不为空时，判断l1和l2的头节点大小，接着递归决定下一个添加到结果里的节点；如果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="五一摸鱼题leetcode21合并两个有序链表">
+<meta property="og:url" content="http://yoursite.com/2020/05/01/leetcode21%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/index.html">
+<meta property="og:site_name" content="伊藤三叶的博客">
+<meta property="og:description" content="#题目 将两个升序链表合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。  示例： 输入：1-&gt;2-&gt;4, 1-&gt;3-&gt;4输出：1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4  #解题思路（一）暴力迭代遍历两个链表，然后合并即可。(二)递归在l1或l2不为空时，判断l1和l2的头节点大小，接着递归决定下一个添加到结果里的节点；如果">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-01T01:05:50.000Z">
+<meta property="article:modified_time" content="2020-05-01T01:19:05.439Z">
+<meta property="article:author" content="Ye Zhenglin">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="伊藤三叶的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">伊藤三叶的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-leetcode21合并两个有序链表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/05/01/leetcode21%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/" class="article-date">
+  <time datetime="2020-05-01T01:05:50.000Z" itemprop="datePublished">2020-05-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      五一摸鱼题leetcode21合并两个有序链表
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#题目 将两个升序链表合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 </p>
+<p>示例：</p>
+<p>输入：1-&gt;2-&gt;4, 1-&gt;3-&gt;4<br>输出：1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4</p>
+<hr>
+<p>#解题思路<br>（一）暴力迭代<br>遍历两个链表，然后合并即可。<br>(二)递归<br>在l1或l2不为空时，判断l1和l2的头节点大小，接着递归决定下一个添加到结果里的节点；如果有一个链表空了，递归结束。</p>
+<hr>
+<p>#参考代码<br>(一)class Solution {<br>    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {<br>        int num=0,g=0;<br>        num+=func1(l1)+func1(l2);<br>        int arr[]=new int[num];<br>        while (l1!=null){<br>          arr[g++]=l1.val;<br>          l1=l1.next;<br>        }<br>        while (l2!=null){<br>           arr[g++]=l2.val;<br>           l2=l2.next;<br>        }<br>        if (arr.length==0)return null;<br>        quickSort(arr,0,arr.length-1);//自己写一个快速排序⑧<br>        ListNode listNode=new ListNode(arr[0]);<br>        ListNode head=listNode;<br>        for (int i = 1; i &lt; arr.length; ++i) {<br>            listNode.next=new ListNode(arr[i]);<br>            listNode=listNode.next;<br>        }<br>        return head;<br>    }<br>    public int func1(ListNode l1){<br>        int ans=0;<br>        while (l1!=null){<br>            ans++;<br>            l1=l1.next;<br>        }<br>        return ans;<br>    }<br>(二)class Solution {<br>    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {<br>        if (l1 == null) {<br>            return l2;<br>        }<br>        else if (l2 == null) {<br>            return l1;<br>        }<br>        else if (l1.val &lt; l2.val) {<br>            l1.next = mergeTwoLists(l1.next, l2);<br>            return l1;<br>        }<br>        else {<br>            l2.next = mergeTwoLists(l1, l2.next);<br>            return l2;<br>        }<br>    }<br>}</p>
+<hr>
+<p>参考文献<br><a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/merge-two-sorted-lists/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/05/01/leetcode21%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/" data-id="ck9nig7s500008cvr2hmbaihw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/20/Leetcode3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">leetcode200 岛屿数量</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/05/01/leetcode21%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/">五一摸鱼题leetcode21合并两个有序链表</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/20/Leetcode3/">leetcode200 岛屿数量</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/18/Leetcode2/">leetcode8</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/18/%E5%8D%9A%E5%AE%A2%E6%B5%8B%E8%AF%95/">leetcode289</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Ye Zhenglin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
