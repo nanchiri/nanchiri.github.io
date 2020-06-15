@@ -187,7 +187,7 @@
 <p>示例:</p>
 <p>输入: [100, 4, 200, 1, 3, 2]<br>输出: 4<br>解释: 最长连续序列是 [1, 2, 3, 4]。它的长度为 4。</p>
 <hr>
-<p>#解题思路与代码<br>public int longestConsecutive(int[] nums) {<br>    Set<Integer> num_set = new HashSet<Integer>();<br>    for (int num : nums) {<br>      num_set.add(num);<br>    }<br>    int longestStreak = 0;<br>    for (int num : num_set) {<br>      if (!num_set.contains(num - 1)) {<br>        int currentNum = num;<br>        int currentStreak = 1;<br>        while (num_set.contains(currentNum + 1)) {<br>          currentNum += 1;<br>          currentStreak += 1;<br>        }<br>        longestStreak = Math.max(longestStreak, currentStreak);<br>      }<br>    }<br>    return longestStreak;<br>  }</p>
+<p>#解题思路与代码<br>public int longestConsecutive(int[] nums) {<br>    Set<Integer> num_set = new HashSet<Integer>();<br>    for (int num : nums) {<br>      num_set.add(num);<br>    }<br>    int longestStreak = 0;<br>    for (int num : num_set) {<br>      if (!num_set.contains(num - 1)) {<br>        int currentNum = num;<br>        int currentStreak = 1;<br>        while (num_set.contains(currentNum + 1)) {<br>          currentNum += 1;<br>          currentStreak += 1;<br>        }<br>        longestStreak = Math.max(longestStreak, currentStreak);<br>      }<br>    }<br>    return longestStreak;<br>  }</Integer></Integer></p>
 <hr>
 <p>#参考文献<br>链接：<a href="https://leetcode-cn.com/problems/longest-consecutive-sequence" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-consecutive-sequence</a></p>
 
@@ -379,6 +379,75 @@
 
 
   
+    <article id="post-Leetcode3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/20/Leetcode3/">leetcode200 岛屿数量</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/20/Leetcode3/" class="archive-article-date">
+  	<time datetime="2020-04-20T08:04:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#题目<br>给你一个由 ‘1’（陆地）和 ‘0’（水）组成的的二维网格，请你计算网格中岛屿的数量。</p>
+<p>岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。</p>
+<p>此外，你可以假设该网格的四条边均被水包围。<br>Input:[[[‘1’,’1’,’1’,’1’,’0’],[‘1’,’1’,’0’,’1’,’0’],[‘1’,’1’,’0’,’0’,’0’],[‘0’,’0’,’0’,’0’,’0’]]]<br>Output:1</p>
+<hr>
+<p>#解法<br>（bfs就不写咯）<br>线性扫描整个二维网络，如果一个节点为’1’，则以其为根据点启动dfs,搜索过程中访问过的节点赋值为’0’，计数dfs的根节点数量，即为岛屿的数量。</p>
+<hr>
+<p>#代码<br>public int numIslands(char[][] grid) {<br>        int ans=0;<br>        for (int i = 0; i &lt; grid.length; ++i) {<br>            for (int j = 0; j &lt; grid[i].length; j++) {<br>                if (grid[i][j]==’1’){<br>                    ans++;<br>                    dfs(grid,i,j);<br>                }<br>            }<br>        }<br>        return ans;<br>    }<br>    public static void dfs(char[][]grid,int row ,int col){<br>        if (row&lt;0||col&lt;0||row&gt;=grid.length||col&gt;=grid[0].length||grid[row][col]==’0’)<br>            return;<br>        dfs(grid,row+1,col);<br>        dfs(grid, row-1, col);<br>        dfs(grid, row, col+1);<br>        dfs(grid, row, col-1);<br>    }<br>    —<br>    #参考文献<br>    <a href="https://leetcode-cn.com/problems/number-of-islands/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/number-of-islands/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/20/Leetcode3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-leetcod4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -427,75 +496,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/04/20/leetcod4/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Leetcode3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/20/Leetcode3/">leetcode200 岛屿数量</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/20/Leetcode3/" class="archive-article-date">
-  	<time datetime="2020-04-20T08:04:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#题目<br>给你一个由 ‘1’（陆地）和 ‘0’（水）组成的的二维网格，请你计算网格中岛屿的数量。</p>
-<p>岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。</p>
-<p>此外，你可以假设该网格的四条边均被水包围。<br>Input:[[[‘1’,’1’,’1’,’1’,’0’],[‘1’,’1’,’0’,’1’,’0’],[‘1’,’1’,’0’,’0’,’0’],[‘0’,’0’,’0’,’0’,’0’]]]<br>Output:1</p>
-<hr>
-<p>#解法<br>（bfs就不写咯）<br>线性扫描整个二维网络，如果一个节点为’1’，则以其为根据点启动dfs,搜索过程中访问过的节点赋值为’0’，计数dfs的根节点数量，即为岛屿的数量。</p>
-<hr>
-<p>#代码<br>public int numIslands(char[][] grid) {<br>        int ans=0;<br>        for (int i = 0; i &lt; grid.length; ++i) {<br>            for (int j = 0; j &lt; grid[i].length; j++) {<br>                if (grid[i][j]==’1’){<br>                    ans++;<br>                    dfs(grid,i,j);<br>                }<br>            }<br>        }<br>        return ans;<br>    }<br>    public static void dfs(char[][]grid,int row ,int col){<br>        if (row&lt;0||col&lt;0||row&gt;=grid.length||col&gt;=grid[0].length||grid[row][col]==’0’)<br>            return;<br>        dfs(grid,row+1,col);<br>        dfs(grid, row-1, col);<br>        dfs(grid, row, col+1);<br>        dfs(grid, row, col-1);<br>    }<br>    —<br>    #参考文献<br>    <a href="https://leetcode-cn.com/problems/number-of-islands/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/number-of-islands/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/20/Leetcode3/">展开全文 >></a>
         </p>
       
 
